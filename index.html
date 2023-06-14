@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Albany County, NY Pedestrian and Cyclist Crash Data Explorer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&amp;display=swap">
+  <link rel="stylesheet" href="./js/ext/leaflet.css">
+  <link rel="stylesheet" href="./js/ext/nouislider.css">
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.ie.css" />
+  <![endif]-->
+  <link rel="stylesheet" href="./css/style.css?1010">
+  <script>
+    window.global = window
+  </script>
+</head>
+
+<body>
+
+  <div id="launchOverlay" class="overlay">
+    <span class="closebtn" id="closeStartOverlayLink1">&times;</span>
+    <div class="overlayContent">
+      <div class="overlayTitle">
+        <span id="overlayTitleName" style="color:#CE1126">Albany New York</span> Pedestrian and Cyclist
+        Crash Data Explorer
+      </div>
+      <div id="overlayIntroDescription">Through this interface you can explore patterns of pedestrian and cyclist
+        crashes in Albany County and understand their connection to different communities and built
+        environments.
+      </div>
+      <div class="overlayLink">
+        <span id="closeStartOverlayLink2">START EXPLORING THE MAP >></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="infoOverlay" class="overlay">
+    <span class="closebtn" id="closeInfoOverlayLink1">&times;</span>
+    <div class="overlayContent">
+      <div class="overlayTitle">
+        The <span id="aboutTitleName" style="color:#CE1126">Albany</span> Pedestrian and Cyclist Traffic
+        Crash Data Explorer
+      </div>
+      <div id="overlayAboutDescription"></div>
+      <div class="overlayDataNotes">
+        <strong>Data Sources and Notes:</strong>
+        <div id="sourceNotesList"></div>
+      </div>
+      <div class="overlayMakerNotes">
+        <strong>Development Notes:</strong>
+        <div id="devNotesList"></div>
+      </div>
+      <div class="overlayLink">
+        <span id="closeInfoOverlayLink2">RETURN TO THE MAP >></span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="main">
+    <div class="container">
+      <div class="containerTitle">
+        <div class="mainTitle">
+          <span id="mainTitleName" style="color:#CE1126">Albany</span> Pedestrian and Cyclist Crash Data
+          Explorer
+        </div>
+        <div class="navRight">
+          <span id="openInfoOverlayLink">Attribution</span>
+        </div>
+      </div>
+      <div class="containerBody">
+        <div class="leftPanel">
+          <div id="map"></div>
+          <div id="loading"></div>
+        </div>
+        <div class="rightPanel">
+          <div class="blockTime">
+            <div class="titleTime">
+              <div class="choiceTitle"><span style="color:#CE1126">Select</span> timeframe</div>
+            </div>
+            <div class="legendNavTime">
+              <div class="navigationTime">
+                <div id="buttonRowYear"></div>
+              </div>
+            </div>
+          </div>
+          <div class="blockTrans">
+            <div class="titleTrans">
+              <div class="choiceTitle"><span style="color:#CE1126">Explore</span> pedestrian or cyclist crashes</div>
+            </div>
+            <div class="legendNavTrans">
+              <div class="legendTrans">
+                <div id="legendCrashes"></div>
+              </div>
+              <div class="navigationTrans">
+                <div class="buttonRow1Crashes">
+                  <span id="linkPed" class="standardButton">Pedestrian</span> <span id="linkBike"
+                    class="standardButton">Cyclist</span>
+                </div>
+                <div class="buttonRow2Crashes">
+                  <label><input type="checkbox" id="heatButton" checked> Heat Map</input></label> <label><input
+                      type="checkbox" id="markerButton" checked> Markers</label></input>
+                </div>
+                <div id="buttonRowSeverity"></div>
+                <div id="buttonRowSeverityLabels">
+                  <div id="sevLab0">Injury:</div>
+                  <div id="sevLab5">None</div>
+                  <div id="sevLab4">Possible</div>
+                  <div id="sevLab3">Injured</div>
+                  <div id="sevLab2">Serious</div>
+                  <div id="sevLab1">Fatal</div>
+                </div>
+              </div>
+              <div class="labelCrashes">
+                <div id="labelCrashes"><span id="titleCrashes"></span><span id="countCrashes"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="blockChart" id="showBlockChart">
+            <div id="linkChart" class="linkChart"></div>
+            <canvas id="line-chart" width="422px" height=120px></canvas>
+          </div>
+          <div class="blockClick">
+            <div class="titleClick">
+              <div class="choiceTitle"><span style="color:#CE1126">View</span> conditions through aerials and street
+                views
+                <div class="tooltip">(?)<span class="tooltiptext">Click on crashes for links to street
+                    views</span></div>
+              </div>
+              <div class="buttonRowCommunity">
+                <label><input type="checkbox" id="aeriButton">Aerial Tiles</input></label>
+              </div>
+            </div>
+          </div>
+          <div class="blockCommunity">
+            <div class="titleCommunity">
+              <div class="choiceTitle"><span style="color:#CE1126">Compare</span> different communities <div
+                  class="tooltip">(?)<span class="tooltiptext">You can click on communities to tally crashes based on
+                    the
+                    current settings
+                  </span></div>
+              </div>
+            </div>
+            <div class="legendNavCommunity">
+              <div class="navigationCommunity">
+                <div class="buttonRowCommunity">
+                  <label><input type="checkbox" id="commButton">Community Boundaries</input></label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="blockDemo">
+            <div class="titleDemo">
+              <div class="choiceTitle">
+                <span style="color:#CE1126">Underlay</span> a demographic lens <div class="tooltip">(?)<span
+                    class="tooltiptext">Consider if some types of places have more or different crashes</span></div>
+              </div>
+            </div>
+            <div class="legendNavDemo">
+              <div class="legendDemo">
+                <div id="legendCensus"></div>
+              </div>
+              <div id="navigationDemo" class="navigationDemo">
+                <div class="buttonRow1Census">
+                  <span id="linkPov" class="standardButton">Poverty</span> <span id="linkHou"
+                    class="standardButton">Housing</span> <span id="linkMode" class="standardButton">Travel
+                    Mode</span>
+                </div>
+                <div class="buttonRow2Census"> <span href="#" id="linkRace" class="standardButton">Race</span> <span
+                    id="linkEth" class="standardButton">Immigration</span> <span id="linkChi"
+                    class="standardButton">Children</span>
+                </div>
+                <div id="labelCensus"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="containerRight">
+      <div class="rankHeader">
+        How dangerous are</br>streets in <span id="rankName">Albany</span>?
+      </div>
+      <div class="rankBox">
+        <div class="rankTitle">Fatal Crash Rates</br><span class="rankSubTitle">Per 100K Population, All Years
+            Avg.</span>
+        </div>
+        <div style="width:105px; margin:5px; float:left">Pedestrian</div>
+        <div style="width:105px; margin:5px; float:left">Cyclist</div>
+        <div id="PedFatalRate" class="rankRate"></div>
+        <div id="BikeFatalRate" class="rankRate"></div>
+      </div>
+      <div class="rankBox">
+        <div class="rankTitle">KSI Crash Rates <span style="font-size:11px"></span></br><span class="rankSubTitle">Per
+            100K
+            Population, All Years Avg.</span>
+        </div>
+        <div style="width:105px; margin:5px; float:left">Pedestrian</div>
+        <div style="width:105px; margin:5px; float:left">Cyclist</div>
+        <div id="PedKSIRate" class="rankRate"></div>
+        <div id="BikeKSIRate" class="rankRate"></div>
+      </div>
+    </div>
+  </div>
+
+  <!---LOAD REQUIRED LIBRARIES-->
+  <script src="./js/ext/leaflet.js"></script>
+  <script src="./js/ext/leaflet-heat.js"></script>
+  <script src="./js/ext/turf.min.js"></script>
+  <script type="module" src="./js/ext/citysdk.js?1001"></script>
+  <script src="./js/ext/nouislider.js"></script>
+  <script src="./js/ext/Chart.min.js"></script>
+  <script src="./js/ext/moment.js"></script>
+  <script src="./js/ext/chartjs-adapter-moment.js"></script>
+  <script type="module" crossorigin src="./js/ext/citysdk-dist.js?1002"></script>
+  <!---LOAD REQUIRED DATA-->
+  <script src="./data/cde_ped.js?1002"></script>
+  <script src="./data/cde_bike.js?1002"></script>
+  <script src="./data/cde_comms.js"></script>
+  <!---LOAD CITY CONFIG FILE-->
+  <script src="./js/config.js?1005"></script>
+  <!---LOAD APP LOGIC-->
+  <script src="./js/main.js?1013"></script>
+
+</body>
+
+</html>
