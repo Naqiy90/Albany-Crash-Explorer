@@ -5,8 +5,8 @@
 var localeShortName = "Albany"
 var localeLongName = "Albany"
 var localeTechnicalName = "Albany County"
-var introDescription = 'Through this interface you can explore patterns of pedestrian and cyclist crashes in the Columbus Metro area and understand their connection to different communities and built environments.'
-var aboutDescription = 'The Albany Crash Data Explorer allows users to explore patterns of pedestrian and cyclist crashes in the Columbus Metro area and understand their connection to different communities and built environments. It\'s underlying software was developed at The Ohio State University through a <a target="_top" href="https://steamfactory.osu.edu/">STEAM Factory</a> postdoctoral research fellowship, with the support of <a target="_top" href="https://cura.osu.edu/">The Center for Urban and Regional Analysis (CURA)</a>.'
+var introDescription = 'Through this interface you can explore patterns of pedestrian and cyclist crashes in Albany County and understand their connection to different communities and built environments.'
+var aboutDescription = 'The Albany Crash Data Explorer allows users to explore patterns of pedestrian and cyclist crashes in Albany County and understand their connection to different communities and built environments. It\'s underlying software was developed at The Ohio State University through a <a target="_top" href="https://steamfactory.osu.edu/">STEAM Factory</a> postdoctoral research fellowship, with the support of <a target="_top" href="https://cura.osu.edu/">The Center for Urban and Regional Analysis (CURA)</a>.'
 var mapAttribution = 'NYSDOT; Walkable Albany; US Census;'
 //Sources and notes on the about overlay
 var sourcesNotes = []
