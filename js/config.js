@@ -29,7 +29,7 @@ var censusDown = false //activate if the Census api is down for a prolonged peri
 var centerLat = 42.65382599
 var centerLong = -73.766277
 //Possible range of values for the year and severity variables (depends on your data)
-var years = [2016, 2017, 2018, 2019, 2020, 2021,2022]
+var years = [2016, 2017, 2018, 2019, 2020, 2021,2022,2023]
 var yearsDefault = [2020,2021, 2022]
 var showTrends = true //false if annual data for the above years is not complete
 var monthlyTrends = true //true is chart default should be drawn based on months instead of years
