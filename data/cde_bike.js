@@ -1,12 +1,5 @@
 var BikeCrashes = {
     "type": "FeatureCollection",
-    "name": "Crash Explorer Bike Data 2016_2023",
-    "crs": {
-        "type": "name",
-        "properties": {
-            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-        }
-    },
     "features": [
         {
             "type": "Feature",
