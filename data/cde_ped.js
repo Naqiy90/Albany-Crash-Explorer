@@ -28496,7 +28496,6 @@ var PedCrashes ={
                 ]
             }
         }
-    ]
    {
               "id": "0",
               "type": "Feature",
@@ -32193,5 +32192,6 @@ var PedCrashes ={
                   ]
               }
           }  
+        ]
   }
   
